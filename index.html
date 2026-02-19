@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salon de Massage - Gestion</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="sidebar">
+<div class="logo">
+            <i class="fas fa-spa"></i>
+            <span>PERFECTISSME</span>
+        </div>
+        <nav>
+            <a href="#" class="nav-item active" data-page="dashboard">
+                <i class="fas fa-home"></i>
+                <span>Tableau de bord</span>
+            </a>
+            <a href="#" class="nav-item" data-page="clients">
+                <i class="fas fa-users"></i>
+                <span>Clients</span>
+            </a>
+            <a href="#" class="nav-item" data-page="services">
+                <i class="fas fa-concierge-bell"></i>
+                <span>Services</span>
+            </a>
+            <a href="#" class="nav-item" data-page="appointments">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Rendez-vous</span>
+            </a>
+            <a href="#" class="nav-item" data-page="new-appointment">
+                <i class="fas fa-plus-circle"></i>
+                <span>Nouveau RDV</span>
+            </a>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <!-- Tableau de bord -->
+        <section id="dashboard" class="page active">
+            <h1>Tableau de bord</h1>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <i class="fas fa-users"></i>
+                    <div class="stat-info">
+                        <span class="stat-number" id="total-clients">0</span>
+                        <span class="stat-label">Clients</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-calendar-check"></i>
+                    <div class="stat-info">
+                        <span class="stat-number" id="today-appointments">0</span>
+                        <span class="stat-label">RDV aujourd'hui</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-euro-sign"></i>
+                    <div class="stat-info">
+                        <span class="stat-number" id="today-revenue">0€</span>
+                        <span class="stat-label">Revenus du jour</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-concierge-bell"></i>
+                    <div class="stat-info">
+                        <span class="stat-number" id="total-services">0</span>
+                        <span class="stat-label">Services</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dashboard-sections">
+                <div class="section-card">
+                    <h2><i class="fas fa-clock"></i> Rendez-vous du jour</h2>
+                    <div id="today-appointments-list" class="appointments-list">
+                        <!-- Will be populated by JS -->
+                    </div>
+                </div>
+                <div class="section-card">
+                    <h2><i class="fas fa-star"></i> Clients récents</h2>
+                    <div id="recent-clients" class="clients-list">
+                        <!-- Will be populated by JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Clients -->
+        <section id="clients" class="page">
+            <div class="page-header">
+                <h1>Gestion des Clients</h1>
+                <button class="btn btn-primary" id="add-client-btn">
+                    <i class="fas fa-plus"></i> Nouveau client
+                </button>
+            </div>
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" id="client-search" placeholder="Rechercher un client...">
+            </div>
+            <div class="table-container">
+                <table id="clients-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nom</th>
+                            <th>Prénom</th>
+                            <th>Téléphone</th>
+                            <th>Email</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="clients-tbody">
+                        <!-- Will be populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Services -->
+        <section id="services" class="page">
+            <div class="page-header">
+                <h1>Services & Tarifs</h1>
+                <button class="btn btn-primary" id="add-service-btn">
+                    <i class="fas fa-plus"></i> Nouveau service
+                </button>
+            </div>
+            <div class="services-grid" id="services-grid">
+                <!-- Will be populated by JS -->
+            </div>
+        </section>
+
+        <!-- Rendez-vous -->
+        <section id="appointments" class="page">
+            <div class="page-header">
+                <h1>Liste des Rendez-vous</h1>
+                <div class="filters">
+                    <input type="date" id="filter-date" class="filter-input">
+                    <select id="filter-status" class="filter-input">
+                        <option value="">Tous les statuts</option>
+                        <option value="confirmed">Confirmé</option>
+                        <option value="pending">En attente</option>
+                        <option value="completed">Terminé</option>
+                        <option value="cancelled">Annulé</option>
+                    </select>
+                </div>
+            </div>
+            <div class="table-container">
+                <table id="appointments-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Client</th>
+                            <th>Service</th>
+                            <th>Date</th>
+                            <th>Heure</th>
+                            <th>Durée</th>
+                            <th>Prix</th>
+                            <th>Statut</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="appointments-tbody">
+                        <!-- Will be populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Nouveau RDV -->
+        <section id="new-appointment" class="page">
+            <h1>Nouveau Rendez-vous</h1>
+            <form id="appointment-form" class="form">
+                <div class="form-group">
+                    <label for="appointment-client">Client</label>
+                    <select id="appointment-client" required>
+                        <option value="">Sélectionner un client</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="appointment-service">Service</label>
+                    <select id="appointment-service" required>
+                        <option value="">Sélectionner un service</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="appointment-date">Date</label>
+                        <input type="date" id="appointment-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="appointment-time">Heure</label>
+                        <input type="time" id="appointment-time" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="appointment-notes">Notes</label>
+                    <textarea id="appointment-notes" rows="3" placeholder="Notes supplémentaires..."></textarea>
+                </div>
+                <div class="form-summary">
+                    <div class="summary-item">
+                        <span>Durée:</span>
+                        <span id="summary-duration">-</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Prix:</span>
+                        <span id="summary-price">0€</span>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg">
+                    <i class="fas fa-check"></i> Confirmer le RDV
+                </button>
+            </form>
+        </section>
+    </div>
+
+    <!-- Modal pour Client -->
+    <div id="client-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title">Nouveau Client</h2>
+                <span class="close">&times;</span>
+            </div>
+            <form id="client-form" class="form">
+                <input type="hidden" id="client-id">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="client-nom">Nom *</label>
+                        <input type="text" id="client-nom" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="client-prenom">Prénom *</label>
+                        <input type="text" id="client-prenom" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="client-tel">Téléphone *</label>
+                        <input type="tel" id="client-tel" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="client-email">Email</label>
+                        <input type="email" id="client-email">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="client-adresse">Adresse</label>
+                    <input type="text" id="client-adresse">
+                </div>
+                <div class="form-group">
+                    <label for="client-notes">Notes</label>
+                    <textarea id="client-notes" rows="2"></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" id="cancel-client">Annuler</button>
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal pour Service -->
+    <div id="service-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="service-modal-title">Nouveau Service</h2>
+                <span class="close">&times;</span>
+            </div>
+            <form id="service-form" class="form">
+                <input type="hidden" id="service-id">
+                <div class="form-group">
+                    <label for="service-nom">Nom du service *</label>
+                    <input type="text" id="service-nom" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="service-duree">Durée (minutes) *</label>
+                        <input type="number" id="service-duree" min="15" step="15" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="service-prix">Prix (€) *</label>
+                        <input type="number" id="service-prix" min="0" step="0.01" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="service-description">Description</label>
+                    <textarea id="service-description" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="service-category">Catégorie</label>
+                    <select id="service-category">
+                        <option value="massage">Massage</option>
+                        <option value="soin">Soin</option>
+                        <option value="autre">Autre</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" id="cancel-service">Annuler</button>
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
